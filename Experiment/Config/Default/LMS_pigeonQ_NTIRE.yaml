@@ -1,0 +1,68 @@
+
+# Name of the experiment. This name is used as the identifier for the experiment.
+# Change this name to avoid overwriting the previous experiment.
+Experiment:
+  name: 'LMS_humanQ_NTIRE'
+  simulation_size: 256 # Dimension of the simulation (i.e. 256 for 256x256 cells)
+  timesteps_per_image: 2 # Number of timesteps per image (i.e. 2 for timesteps t1 and t2)
+  simulating_tetra: true # Whether to simulate tetrachromacy
+
+# Retinal model parameters
+RetinaModel:
+
+  retina_spatial_sampling:
+    type: 'Default' # Spatial sampling strategy for the retina
+
+  retina_spectral_sampling:
+    type: 'Default' # Spectral sampling strategy for the retina
+    cone_types: 'LMSQ' # Cone types in the retina mosaic
+    cone_fundamentals: 
+      L: 560    # Default L cone peaks at 560 nm
+      M: 530    # Default M cone peaks at 530 nm
+      S: 419    # Default S cone peaks at 419 nm
+      Q: 506    # Tetrachromacy: pigeon Q cone peaks at 506 nm
+
+  retina_lateral_inhibition:
+    type: 'Default' # Default lateral inhibition strategy in the retina
+
+  retina_eye_motion:
+    type: 'Default' # Eye motion strategy in the retina
+
+  max_shift_size: 15 # Maximum shift size in pixels for eye motion between two timesteps
+
+
+# Dataset parameters
+Dataset:
+  dataset_name: 'NTIRE' # Name of the dataset to be used ('NTIRE', 'HueSphere', 'FullColors')
+  batch_size: 8 # Number of samples per batch
+
+
+# Dimensionality boosting simulation parameters
+DimensionalityBoosting:
+  is_dimensionality_boosting: false # Whether to simulate dimensionality boosting
+  previous_cone_mosaic: null # Previous cone mosaic configuration for boosting
+  load_pretrain_timestep: null # Timestep to load pre-trained model weights
+
+
+# Training parameters
+Training:
+  learning_rate: 0.001 # Learning rate for the optimizer
+  learning_progress_logging: true # Enable logging of learning progress
+  logging_mode: 'Comet' # Mode of logging ('Local', 'Tensorboard', 'Comet')
+  logging_cycle: 1000 # Frequency of logging in terms of gradient updates
+  max_gradient_updates: 100000 # Maximum number of gradient updates for training
+
+
+# Cortical model parameters
+CorticalModel:
+  cortex_learn_eye_motion:
+    type: 'Default' # Learning strategy for eye motion in the cortex
+  cortex_learn_spatial_sampling:
+    type: 'Default' # Learning strategy for spatial sampling in the cortex
+  cortex_learn_cone_spectral_type:
+    type: 'Default' # Learning strategy for cone spectral type in the cortex
+  cortex_learn_demosaicing:
+    type: 'Default' # Learning strategy for demosaicing in the cortex
+  cortex_learn_lateral_inhibition:
+    type: 'Default' # Learning strategy for lateral inhibition in the cortex
+  latent_dim: 8 # Latent dimension (N in the paper) for the cortical model

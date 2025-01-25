@@ -1,0 +1,30 @@
+Experiment:
+  name: 'RetinaSimulation'
+  simulation_size: 256 # Dimension of the simulation (i.e. 256 for 256x256 cells)
+  timesteps_per_image: 120 # Number of timesteps per image
+  simulating_tetra: false # Whether to simulate tetrachromacy
+
+# Retinal model parameters
+RetinaModel:
+  # Parameters for the spatial sampling module
+  retina_spatial_sampling:
+    type: 'Default' # selecting SS_Default class
+
+  # Parameters for the spectral sampling module
+  retina_spectral_sampling:
+    type: 'Default' # selecting SS_Default class
+    cone_types: 'MS' # Cone types in the retina mosaic
+
+  # Parameters for the lateral inhibition module
+  retina_lateral_inhibition:
+    type: 'Default' # selecting LI_Default class
+
+  # Parameters for the eye motion module
+  retina_eye_motion:
+    type: 'Default' # selecting EM_Default class
+
+  # Parameters for the spike conversion module
+  retina_spike_conversion:
+    type: 'LeakyIntegrateAndFire' # selecting SC_LeakyIntegrateAndFire class
+
+  max_shift_size: 5 # Maximum shift size in pixels for eye motion between timesteps

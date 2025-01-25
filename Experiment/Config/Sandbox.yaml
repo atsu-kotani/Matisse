@@ -1,0 +1,65 @@
+
+# Name of the experiment. This name is used as the identifier for the experiment.
+# Change this name to avoid overwriting the previous experiment.
+Experiment:
+  name: 'Sandbox'
+  simulation_size: 64 # Dimension of the simulation (i.e. 256 for 256x256 cells)
+  timesteps_per_image: 2 # Number of timesteps per image (i.e. 2 for timesteps t1 and t2)
+  simulating_tetra: false # Whether to simulate tetrachromacy
+
+
+# Retinal model parameters
+RetinaModel:
+
+  retina_spatial_sampling:
+    type: 'Identity' # No spatial sampling
+
+  retina_spectral_sampling:
+    type: 'Default' # Spectral sampling strategy for the retina
+    cone_types: 'LMS' # Cone types in the retina mosaic
+
+  retina_lateral_inhibition:
+    type: 'Identity' # No lateral inhibition
+
+  retina_eye_motion:
+    type: 'Default' # Eye motion strategy in the retina
+
+  retina_spike_conversion:
+    type: 'Default' # Spike conversion strategy in the retina
+
+  max_shift_size: 5 # Maximum shift size in pixels for eye motion between two timesteps
+
+
+# Dataset parameters
+Dataset:
+  dataset_name: 'ImageNet64x64'
+  batch_size: 8 # Number of samples per batch
+
+
+# Dimensionality boosting simulation parameters
+DimensionalityBoosting:
+  is_dimensionality_boosting: false # Whether to simulate dimensionality boosting
+
+
+# Training parameters
+Training:
+  learning_rate: 0.001 # Learning rate for the optimizer
+  learning_progress_logging: true # Enable logging of learning progress
+  logging_mode: 'Local' # Mode of logging ('Local', 'Tensorboard', 'Comet')
+  logging_cycle: 1000 # Frequency of logging in terms of gradient updates
+  max_gradient_updates: 100000 # Maximum number of gradient updates for training
+
+
+# Cortical model parameters
+CorticalModel:
+  cortex_learn_eye_motion:
+    type: 'GroundTruth' # Learning strategy for eye motion in the cortex
+  cortex_learn_spatial_sampling:
+    type: 'Sandbox' # Learning strategy for spatial sampling in the cortex
+  cortex_learn_cone_spectral_type:
+    type: 'Default' # Learning strategy for cone spectral type in the cortex
+  cortex_learn_demosaicing:
+    type: 'Sandbox' # Learning strategy for demosaicing in the cortex
+  cortex_learn_lateral_inhibition:
+    type: 'Identity' # Learning strategy for lateral inhibition in the cortex
+  latent_dim: 8 # Latent dimension (N in the paper) for the cortical model
